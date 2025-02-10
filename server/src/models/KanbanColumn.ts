@@ -3,13 +3,13 @@ import mongoose, { Schema, Document } from "mongoose";
 // Define the KanbanColumn interface
 interface KanbanColumn extends Document {
     title: string;
-    cardIds: string[];
+    cardIds: mongoose.Types.ObjectId[];
 }
 
 // Define the KanbanColumn schema
 const KanbanColumnSchema: Schema = new Schema({
     title: { type: String, required: true },
-    cardIds: { type: [String], required: true }
+    cardIds: { type: [mongoose.Types.ObjectId], required: false }
 });
 
 // Create the KanbanColumn model
