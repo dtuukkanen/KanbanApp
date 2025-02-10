@@ -1,11 +1,14 @@
 import express, { Express, Request, Response } from 'express';
-import router from './routes';
 import mongoose, { Connection } from 'mongoose';
+import router from './routes';
 import morgan from 'morgan';
 
 // Create a new express app
 const app: Express = express();
-const port = 3000;
+const PORT = 3000;
+
+// Parse JSON bodies
+app.use(express.json());
 
 // Connect to the database
 const mongoUrl = 'mongodb://localhost:27017/kanban';
@@ -22,6 +25,6 @@ app.use(morgan('dev'));
 app.use("/api", router);
 
 // Start Express
-app.listen(port, () => {
-    console.log(`Server started on http://localhost:${port}`);
+app.listen(PORT, () => {
+    console.log(`Server started on http://localhost:${PORT}`);
 });
