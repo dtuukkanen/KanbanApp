@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { KanbanCardModel } from '../models/KanbanCard';
-import { KanbanColumnModel } from '../models/KanbanColumn';
+import { KanbanCardModel } from '../../models/KanbanCard';
+import { KanbanColumnModel } from '../../models/KanbanColumn';
 
 const createColumnRouter = Router();
 

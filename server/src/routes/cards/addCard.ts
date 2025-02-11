@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { KanbanColumnModel } from '../models/KanbanColumn';
-import { KanbanCardModel } from '../models/KanbanCard';
+import { KanbanColumnModel } from '../../models/KanbanColumn';
+import { KanbanCardModel } from '../../models/KanbanCard';
 import mongoose from 'mongoose';
 
 const addCardRouter = Router();

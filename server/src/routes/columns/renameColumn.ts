@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { KanbanColumnModel } from '../models/KanbanColumn';
+import { KanbanColumnModel } from '../../models/KanbanColumn';
 
 const renameColumnRouter = Router();
 
