@@ -9,7 +9,11 @@ interface KanbanColumn extends Document {
 // Define the KanbanColumn schema
 const KanbanColumnSchema: Schema = new Schema({
     title: { type: String, required: true },
-    cardIds: { type: [mongoose.Types.ObjectId], required: false }
+    cardIds: [{
+        type: mongoose.Types.ObjectId,
+        ref: "KanbanCard",
+        required: false
+    }]
 });
 
 // Create the KanbanColumn model
