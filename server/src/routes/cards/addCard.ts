@@ -21,10 +21,11 @@ addCardRouter.post('/', async (req, res) => {
             // Add the new card to the column
             column.cardIds.push(newCard._id as mongoose.Types.ObjectId);
             await column.save();
+
+            // Save the new KanbanCard document
+            await newCard.save();
         }
 
-        // Save the new KanbanCard document
-        await newCard.save();
         return void res.status(201).send(newCard);
     } catch (error: any) {
         console.error("Error saving kanban card:", error);
