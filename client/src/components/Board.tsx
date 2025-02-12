@@ -8,7 +8,7 @@ const columns: any = [
 
 export default function Board() {
     return (
-        <div className="mx-auto max-w-7xl sm:px-6 lg:px-8 flex space-x-4">
+        <div className="mx-auto max-w-7xl sm:px-6 lg:px-8 flex justify-center space-x-4">
             {columns.map(() => (
                 <Column />
             ))}
