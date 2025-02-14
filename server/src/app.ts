@@ -2,6 +2,10 @@ import express, { Express, Request, Response } from 'express';
 import mongoose, { Connection } from 'mongoose';
 import router from './routes';
 import morgan from 'morgan';
+import dotenv from 'dotenv';
+
+// Import the environment variables
+dotenv.config();
 
 // Create a new express app
 const app: Express = express();

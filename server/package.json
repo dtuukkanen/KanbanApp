@@ -12,12 +12,15 @@
   },
   "devDependencies": {
     "@types/express": "^5.0.0",
+    "@types/jsonwebtoken": "^9.0.8",
     "@types/morgan": "^1.9.9",
     "nodemon": "^3.1.9",
     "tsc-watch": "^6.2.1"
   },
   "dependencies": {
+    "dotenv": "^16.4.7",
     "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.10.0",
     "morgan": "^1.10.0"
   }
