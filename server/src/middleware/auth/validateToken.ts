@@ -24,7 +24,7 @@ const validateToken = (req: Request, res: Response, next: NextFunction) => {
 
     // If no token is found, return a 401 response
     if (!token) {
-        return res.status(401).send('Token not found');
+        return void res.status(401).send('Token not found');
     }
 
     try {
@@ -36,6 +36,8 @@ const validateToken = (req: Request, res: Response, next: NextFunction) => {
         next();
     } catch (error) {
         // If the token is invalid, return a 401 response
-        return res.status(401).send('Invalid token');
+        return void res.status(401).send('Invalid token');
     }
 }
+
+export default validateToken;
