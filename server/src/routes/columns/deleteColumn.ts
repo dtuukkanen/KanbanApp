@@ -4,9 +4,9 @@ import { KanbanColumnModel } from '../../models/KanbanColumn';
 
 const createColumnRouter = Router();
 
-createColumnRouter.delete('/', async (req, res) => {
+createColumnRouter.delete('/:columnId', async (req, res) => {
     try {
-        const { columnId } = req.body;
+        const columnId  = req.params.columnId;
     
         const column = await KanbanColumnModel.findById(columnId);
         if (!column) {

@@ -3,9 +3,10 @@ import { KanbanColumnModel } from '../../models/KanbanColumn';
 
 const renameColumnRouter = Router();
 
-renameColumnRouter.put('/', async (req, res) => {
+renameColumnRouter.put('/:columnId', async (req, res) => {
     try {
-        const { columnId, newTitle } = req.body;
+        const columnId = req.params.columnId;
+        const newTitle = req.body;
     
         const column = await KanbanColumnModel.findById(columnId);
         if (!column) {

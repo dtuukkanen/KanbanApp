@@ -1,11 +1,13 @@
 import { Router } from 'express';
 import { KanbanColumnModel } from '../../models/KanbanColumn';
+import mongoose from 'mongoose';
 
 const moveCardRouter = Router();
 
-moveCardRouter.put('/', async (req, res) => {
+moveCardRouter.put('/:cardId', async (req, res) => {
     try {
-        const { newColumnId, oldColumnId, cardId } = req.body;
+        const cardId = req.params.cardId;
+        const { newColumnId, oldColumnId } = req.body;
     
         // Find new and old columns
         const newColumn = await KanbanColumnModel.findById(newColumnId);
@@ -18,7 +20,7 @@ moveCardRouter.put('/', async (req, res) => {
             return void res.status(404).json({ message: "Old column not found" });
         } else {
             // Add card to new column
-            newColumn.cardIds.push(cardId);
+            newColumn.cardIds.push(new mongoose.Types.ObjectId(cardId));
             await newColumn.save();
 
             // Remove card from old column
