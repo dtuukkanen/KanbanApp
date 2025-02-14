@@ -2,9 +2,9 @@ import { Router } from 'express';
 import { KanbanCardModel } from '../../models/KanbanCard';
 import { KanbanColumnModel } from '../../models/KanbanColumn';
 
-const createColumnRouter = Router();
+const deleteColumnRouter = Router();
 
-createColumnRouter.delete('/:columnId', async (req, res) => {
+deleteColumnRouter.delete('/:columnId', async (req, res) => {
     try {
         const { columnId } = req.params;
     
@@ -22,4 +22,4 @@ createColumnRouter.delete('/:columnId', async (req, res) => {
     }
 });
 
-export default createColumnRouter;
+export default deleteColumnRouter;
