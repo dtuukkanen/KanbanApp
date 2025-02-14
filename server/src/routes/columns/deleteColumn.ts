@@ -6,7 +6,7 @@ const createColumnRouter = Router();
 
 createColumnRouter.delete('/:columnId', async (req, res) => {
     try {
-        const columnId  = req.params.columnId;
+        const { columnId } = req.params;
     
         const column = await KanbanColumnModel.findById(columnId);
         if (!column) {

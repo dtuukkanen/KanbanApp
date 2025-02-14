@@ -6,7 +6,7 @@ const moveCardRouter = Router();
 
 moveCardRouter.put('/:cardId', async (req, res) => {
     try {
-        const cardId = req.params.cardId;
+        const { cardId } = req.params;
         const { newColumnId, oldColumnId } = req.body;
     
         // Find new and old columns

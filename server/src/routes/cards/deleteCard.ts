@@ -6,8 +6,8 @@ const deleteCardRouter = Router();
 
 deleteCardRouter.delete('/:columnId', async (req, res) => {
     try {
-        const columnId = req.params.columnId;
-        const cardId = req.body;
+        const { columnId } = req.params;
+        const { cardId } = req.body;
 
         // Find the column that the new card belongs to
         const column = await KanbanColumnModel.findById(columnId);

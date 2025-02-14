@@ -5,8 +5,8 @@ const renameColumnRouter = Router();
 
 renameColumnRouter.put('/:columnId', async (req, res) => {
     try {
-        const columnId = req.params.columnId;
-        const newTitle = req.body;
+        const { columnId } = req.params;
+        const { newTitle } = req.body;
     
         const column = await KanbanColumnModel.findById(columnId);
         if (!column) {
