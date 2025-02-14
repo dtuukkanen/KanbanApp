@@ -2,7 +2,6 @@ import mongoose, { Schema, Document} from "mongoose";
 
 // Define the User interface
 interface User extends Document {
-    username: string;
     email: string;
     password: string;
     board: mongoose.Types.ObjectId;
@@ -10,7 +9,6 @@ interface User extends Document {
 
 // Define the User schema
 const UserSchema: Schema = new Schema({
-    username: { type: String, required: true },
     email: { type: String, required: true },
     password: { type: String, required: true },
     board: {
