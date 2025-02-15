@@ -1,124 +1,138 @@
-import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/react'
-import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
-import { NavLink } from 'react-router-dom'
+import * as React from 'react';
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import Menu from '@mui/material/Menu';
+import MenuIcon from '@mui/icons-material/Menu';
+import Container from '@mui/material/Container';
+import Button from '@mui/material/Button';
+import MenuItem from '@mui/material/MenuItem';
+import AdbIcon from '@mui/icons-material/Adb';
+import { Link } from 'react-router-dom';
+
+const pages = [
+  { name: 'Kanban', link: '/'},
+  { name: 'Login', link: '/login'},
+  { name: 'Register', link: '/register'},
+  { name: 'Logout', link: '/logout'}
+];
 
 const Header = () => {
-  return (
-    <Disclosure as="nav" className="bg-white shadow-sm">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex h-16 justify-between">
-          <div className="flex">
-            <div className="flex shrink-0 items-center">
-              <img
-                alt="Your Company"
-                src="https://tailwindui.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
-                className="h-8 w-auto"
-              />
-            </div>
-            <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
-              {/* Current: "border-indigo-500 text-gray-900", Default: "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700" */}
-              <NavLink
-                to="/"
-                className={({ isActive }) =>
-                  isActive
-                    ? "inline-flex items-center border-b-2 border-indigo-500 px-1 pt-1 text-sm font-medium text-gray-900"
-                    : "inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
-                }
-              >
-                Kanban
-              </NavLink>
-              <NavLink
-                to="/login"
-                className={({ isActive }) =>
-                  isActive
-                    ? "inline-flex items-center border-b-2 border-indigo-500 px-1 pt-1 text-sm font-medium text-gray-900"
-                    : "inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
-                }
-              >
-                Login
-              </NavLink>
-              <NavLink
-                to="/register"
-                className={({ isActive }) =>
-                  isActive
-                    ? "inline-flex items-center border-b-2 border-indigo-500 px-1 pt-1 text-sm font-medium text-gray-900"
-                    : "inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
-                }
-              >
-                Register
-              </NavLink>
-              <NavLink
-                to="/signout"
-                className={({ isActive }) =>
-                  isActive
-                    ? "inline-flex items-center border-b-2 border-indigo-500 px-1 pt-1 text-sm font-medium text-gray-900"
-                    : "inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
-                }
-              >
-                Signout
-              </NavLink>
-            </div>
-          </div>
-          <div className="-mr-2 flex items-center sm:hidden">
-            {/* Mobile menu button */}
-            <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:ring-2 focus:ring-indigo-500 focus:outline-hidden focus:ring-inset">
-              <span className="absolute -inset-0.5" />
-              <span className="sr-only">Open main menu</span>
-              <Bars3Icon aria-hidden="true" className="block size-6 group-data-open:hidden" />
-              <XMarkIcon aria-hidden="true" className="hidden size-6 group-data-open:block" />
-            </DisclosureButton>
-          </div>
-        </div>
-      </div>
+  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
 
-      <DisclosurePanel className="sm:hidden border-b border-gray-200">
-        <div className="space-y-1 pt-2 pb-3">
-          {/* Current: "bg-indigo-50 border-indigo-500 text-indigo-700", Default: "border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700" */}
-          <NavLink
-            to="/"
-            end
-            className={({ isActive }) =>
-              isActive
-                ? "block border-l-4 border-indigo-500 bg-indigo-50 py-2 pr-4 pl-3 text-base font-medium text-indigo-700"
-                : "block border-l-4 border-transparent py-2 pr-4 pl-3 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700"
-            }
+  const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorElNav(event.currentTarget);
+  };
+
+  const handleCloseNavMenu = () => {
+    setAnchorElNav(null);
+  };
+
+  return (
+    <AppBar position="static">
+      <Container maxWidth="xl">
+        <Toolbar disableGutters>
+          {/* Desktop Logo */}
+          <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+          <Typography
+            variant="h6"
+            noWrap
+            component="a"
+            href="#app-bar-with-responsive-menu"
+            sx={{
+              mr: 2,
+              display: { xs: 'none', md: 'flex' },
+              fontFamily: 'monospace',
+              fontWeight: 700,
+              letterSpacing: '.3rem',
+              color: 'inherit',
+              textDecoration: 'none',
+            }}
           >
-          Kanban
-        </NavLink>
-        <NavLink
-          to="/login"
-          className={({ isActive }) =>
-            isActive
-              ? "block border-l-4 border-indigo-500 bg-indigo-50 py-2 pr-4 pl-3 text-base font-medium text-indigo-700"
-              : "block border-l-4 border-transparent py-2 pr-4 pl-3 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700"
-          }
-        >
-          Login
-        </NavLink>
-        <NavLink
-          to="/register"
-          className={({ isActive }) =>
-            isActive
-              ? "block border-l-4 border-indigo-500 bg-indigo-50 py-2 pr-4 pl-3 text-base font-medium text-indigo-700"
-              : "block border-l-4 border-transparent py-2 pr-4 pl-3 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700"
-          }
-        >
-          Register
-        </NavLink>
-        <NavLink
-          to="/signout"
-          className={({ isActive }) =>
-            isActive
-              ? "block border-l-4 border-indigo-500 bg-indigo-50 py-2 pr-4 pl-3 text-base font-medium text-indigo-700"
-              : "block border-l-4 border-transparent py-2 pr-4 pl-3 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700"
-          }
-        >
-          Signout
-        </NavLink>
-        </div>
-      </DisclosurePanel>
-    </Disclosure>
-  )
+            Desktop
+          </Typography>
+          {/* Desktop Menu */}
+          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+            {pages.map((page) => (
+              <Button
+                key={page.name}
+                onClick={handleCloseNavMenu}
+                component={Link}
+                to={page.link}
+                sx={{ my: 2, color: 'white', display: 'block' }}
+              >
+                {page.name}
+              </Button>
+            ))}
+          </Box>
+
+          {/* Mobile Menu */}
+          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+            <IconButton
+              size="large"
+              aria-label="account of current user"
+              aria-controls="menu-appbar"
+              aria-haspopup="true"
+              onClick={handleOpenNavMenu}
+              color="inherit"
+            >
+              <MenuIcon />
+            </IconButton>
+            <Menu
+              id="menu-appbar"
+              anchorEl={anchorElNav}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'left',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'left',
+              }}
+              open={Boolean(anchorElNav)}
+              onClose={handleCloseNavMenu}
+              sx={{ display: { xs: 'block', md: 'none' } }}
+            >
+              {pages.map((page) => (
+                <MenuItem 
+                  key={page.name}
+                  onClick={handleCloseNavMenu}
+                  component={Link}
+                  to={page.link}
+                  >
+                  <Typography sx={{ textAlign: 'center' }}>{page.name}</Typography>
+                </MenuItem>
+              ))}
+            </Menu>
+          </Box>
+          {/* Mobile Logo */}
+          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+          <Typography
+            variant="h5"
+            noWrap
+            component="a"
+            href="#app-bar-with-responsive-menu"
+            sx={{
+              mr: 2,
+              display: { xs: 'flex', md: 'none' },
+              flexGrow: 1,
+              fontFamily: 'monospace',
+              fontWeight: 700,
+              letterSpacing: '.3rem',
+              color: 'inherit',
+              textDecoration: 'none',
+            }}
+          >
+            Mobile
+          </Typography>
+
+        </Toolbar>
+      </Container>
+    </AppBar>
+  );
 }
 
 export default Header
