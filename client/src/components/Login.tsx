@@ -26,6 +26,9 @@ const Login = () => {
         throw new Error(data.message || 'Login failed')
       }
 
+      const data = await response.json()
+      localStorage.setItem('token', data.token)
+
       // Redirect to the dashboard
       navigate('/')
     } catch (error: any) {
