@@ -41,6 +41,8 @@ const Register = () => {
         <body class="h-full">
         ```
       */}
+
+      {/* Logo and page title */}
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img
@@ -53,8 +55,11 @@ const Register = () => {
           </h2>
         </div>
 
+        {/* Register form */}
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
           <form onSubmit={handleSubmit} className="space-y-6">
+
+            {/* Email input */}
             <div>
               <label htmlFor="email" className="block text-sm/6 font-medium text-gray-900">
                 Email address
@@ -73,6 +78,7 @@ const Register = () => {
               </div>
             </div>
 
+            {/* Password input */}
             <div>
               <label htmlFor="password" className="block text-sm/6 font-medium text-gray-900">
                 Password
@@ -91,8 +97,10 @@ const Register = () => {
               </div>
             </div>
 
+            {/* Display error message */}
             {error && <p className='text-red-500'>{error}</p>}
 
+            {/* Register button */}
             <div>
               <button
                 type="submit"
@@ -103,6 +111,7 @@ const Register = () => {
             </div>
           </form>
 
+          {/* Login link */}
           <p className="mt-10 text-center text-sm/6 text-gray-500">
             Already have an account?{' '}
             <Link

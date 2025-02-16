@@ -1,6 +1,38 @@
 import { Link } from 'react-router-dom'
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const Login = () => {
+  const [email, setEmail] = useState<string>('')
+  const [password, setPassword] = useState<string>('')
+  const [error, setError] = useState<string | null>(null)
+  const navigate = useNavigate();
+
+  // Handle form submission
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+
+    try {
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      if (!response.ok) {
+        const data = await response.json()
+        throw new Error(data.message || 'Login failed')
+      }
+
+      // Redirect to the dashboard
+      navigate('/')
+    } catch (error: any) {
+      setError(error.message || 'Login failed')
+    }
+  };
+
   return (
     <>
       {/*
@@ -11,6 +43,8 @@ const Login = () => {
         <body class="h-full">
         ```
       */}
+
+      {/* Logo and page title */}
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img
@@ -23,8 +57,11 @@ const Login = () => {
           </h2>
         </div>
 
+        {/* Login form */}
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form action="#" method="POST" className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-6">
+
+            {/* Email input */}
             <div>
               <label htmlFor="email" className="block text-sm/6 font-medium text-gray-900">
                 Email address
@@ -36,11 +73,14 @@ const Login = () => {
                   type="email"
                   required
                   autoComplete="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                 />
               </div>
             </div>
 
+            {/* Password input */}
             <div>
               <label htmlFor="password" className="block text-sm/6 font-medium text-gray-900">
                 Password
@@ -52,11 +92,17 @@ const Login = () => {
                   type="password"
                   required
                   autoComplete="current-password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                 />
               </div>
             </div>
 
+            {/* Display error message */}
+            { error && <p className="text-red-500">{error}</p> }
+        
+            {/* Submit button */}
             <div>
               <button
                 type="submit"
@@ -67,6 +113,7 @@ const Login = () => {
             </div>
           </form>
 
+          {/* Register link */}
           <p className="mt-10 text-center text-sm/6 text-gray-500">
             Don't have an account?{' '}
             <Link
