@@ -26,6 +26,7 @@ loginUserRouter.post("/", async (req, res) => {
         if (bcrypt.compareSync(password, user.password)) {
             const jwtPayload: JwtPayload = {
                 id: user._id,
+                username: user.username,
                 email: user.email
             };
 
