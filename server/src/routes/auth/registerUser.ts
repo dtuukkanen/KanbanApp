@@ -17,10 +17,13 @@ registerUserRouter.post('/', async (req, res) => {
             return void res.status(400).json({ message: "Password is required" });
         }
 
-        // Check if user exists
-        const user = await UserModel.findOne({ email });
-        if (user) {
-            return void res.status(409).json({ message: "User already exists" });
+        // Check if user exists with the same username or email
+        const userWithUsername = await UserModel.findOne({ username });
+        const userWithEmail = await UserModel.findOne({ email });
+        if (userWithUsername) {
+            return void res.status(409).json({ message: "User already exists with this username" });
+        } else if (userWithEmail) {
+            return void res.status(409).json({ message: "User already exists with this email" });
         }
 
         // TODO: Validate email and password through express-validator
