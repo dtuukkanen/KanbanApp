@@ -2,10 +2,11 @@ import { Router } from 'express';
 import { KanbanColumnModel } from '../../models/KanbanColumn';
 import { KanbanCardModel } from '../../models/KanbanCard';
 import mongoose from 'mongoose';
+import validateToken from '../../middleware/auth/validateToken';
 
 const addCardRouter = Router();
 
-addCardRouter.post('/', async (req, res) => {
+addCardRouter.post('/', validateToken, async (req, res) => {
     try {
         // Extract the title, description, color, tags, and version from the request body
         const { title, description, color, tags, version, columnId } = req.body;

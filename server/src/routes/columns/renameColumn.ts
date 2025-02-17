@@ -1,9 +1,10 @@
 import { Router } from 'express';
 import { KanbanColumnModel } from '../../models/KanbanColumn';
+import validateToken from '../../middleware/auth/validateToken';
 
 const renameColumnRouter = Router();
 
-renameColumnRouter.put('/:columnId', async (req, res) => {
+renameColumnRouter.put('/:columnId', validateToken, async (req, res) => {
     try {
         const { columnId } = req.params;
         const { newTitle } = req.body;

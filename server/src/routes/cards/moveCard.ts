@@ -1,10 +1,11 @@
 import { Router } from 'express';
 import { KanbanColumnModel } from '../../models/KanbanColumn';
 import mongoose from 'mongoose';
+import validateToken from '../../middleware/auth/validateToken';
 
 const moveCardRouter = Router();
 
-moveCardRouter.put('/:cardId', async (req, res) => {
+moveCardRouter.put('/:cardId', validateToken, async (req, res) => {
     try {
         const { cardId } = req.params;
         const { newColumnId, oldColumnId } = req.body;

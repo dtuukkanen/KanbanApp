@@ -1,10 +1,11 @@
 import { Router } from 'express';
 import { KanbanColumnModel } from '../../models/KanbanColumn';
 import { KanbanCardModel } from '../../models/KanbanCard';
+import validateToken from '../../middleware/auth/validateToken';
 
 const deleteCardRouter = Router();
 
-deleteCardRouter.delete('/:columnId', async (req, res) => {
+deleteCardRouter.delete('/:columnId', validateToken, async (req, res) => {
     try {
         const { columnId } = req.params;
         const { cardId } = req.body;
