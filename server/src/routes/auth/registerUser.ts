@@ -6,10 +6,12 @@ const registerUserRouter = Router();
 
 registerUserRouter.post('/', async (req, res) => {
     try {
-        const { email, password } = req.body;
+        const { username, email, password } = req.body;
 
         // Check if email and password are provided
-        if (!email) {
+        if (!username) {
+            return void res.status(400).json({ message: "Username is required" });
+        } else if (!email) {
             return void res.status(400).json({ message: "Email is required" });
         } else if (!password) {
             return void res.status(400).json({ message: "Password is required" });
@@ -29,6 +31,7 @@ registerUserRouter.post('/', async (req, res) => {
 
         // Create a new user document
         const newUser = new UserModel({
+            username,
             email,
             password: hashedPassword
         });
