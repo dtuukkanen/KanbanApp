@@ -34,7 +34,7 @@ loginUserRouter.post("/", async (req, res) => {
             const token: string = jwt.sign(
                 jwtPayload,
                 process.env.JWT_SECRET as string,
-                { expiresIn: "5m" }
+                { expiresIn: "1h" }
             );
 
             // Return the token

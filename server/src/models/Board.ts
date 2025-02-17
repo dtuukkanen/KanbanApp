@@ -12,7 +12,7 @@ const BoardSchema: Schema = new Schema({
     columns: [{
         type: mongoose.Types.ObjectId,
         ref: "KanbanColumn",
-        required: true
+        required: false
     }]
 });
 

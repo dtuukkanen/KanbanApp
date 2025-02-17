@@ -12,7 +12,7 @@ const KanbanColumnSchema: Schema = new Schema({
     cardIds: [{
         type: mongoose.Types.ObjectId,
         ref: "KanbanCard",
-        required: false
+        default: []
     }]
 });
 

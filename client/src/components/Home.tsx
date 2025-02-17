@@ -3,8 +3,10 @@ import { useNavigate } from 'react-router-dom'
 import Board from './Board'
 import { Link } from 'react-router-dom'
 
-const Welcome = () => {
+const Home = () => {
   const [username, setUsername] = useState<string>('');
+  const [userId, setUserId] = useState<string>('');
+  const [boardIds, setBoardIds] = useState<string[]>([]);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const navigate = useNavigate();
 
@@ -29,11 +31,26 @@ const Welcome = () => {
       })
       .then(data => {
         setUsername(data.username);
+        setUserId(data.id);
+        return fetch(`/api/auth/getBoards/${data.id}`, {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error("Failed to fetch boards");
+        }
+        return response.json();
+      })
+      .then(data => {
+        setBoardIds(data);
       })
       .catch(err => {
         console.error(err);
         setErrorMsg('Not authenticated');
-        localStorage.removeItem('token');
+        //localStorage.removeItem('token');
       });
   }, [navigate]);
 
@@ -55,7 +72,11 @@ const Welcome = () => {
             <h2 className="mt-2 text-5xl font-semibold tracking-tight text-gray-900 sm:text-7xl">
               Kanban Board
             </h2>
-            <Board />
+            <div className='mt-8 flex justify-center space-x-4'>
+              {boardIds.map((boardId) => (
+                <Board key={boardId} boardId={boardId} />
+              ))}
+            </div>
           </>
         )}
       </div>
@@ -63,4 +84,4 @@ const Welcome = () => {
   )
 }
 
-export default Welcome
+export default Home

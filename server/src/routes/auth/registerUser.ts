@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { UserModel } from '../../models/User';
 import bcrypt from 'bcryptjs';
+import { BoardModel } from '../../models/Board';
 
 const registerUserRouter = Router();
 
@@ -32,11 +33,21 @@ registerUserRouter.post('/', async (req, res) => {
         const saltRounds = 10;
         const hashedPassword = bcrypt.hashSync(password, saltRounds);
 
+        // Create a new board document
+        const newBoard = new BoardModel({
+            title: `${username}'s board`,
+            columns: []
+        });
+
+        // Save the new board document
+        await newBoard.save();
+
         // Create a new user document
         const newUser = new UserModel({
             username,
             email,
-            password: hashedPassword
+            password: hashedPassword,
+            boards: [newBoard._id]
         });
 
         // Save the new user document

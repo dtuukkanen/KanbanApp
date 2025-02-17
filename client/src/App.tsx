@@ -1,6 +1,5 @@
 import './App.css'
-import Board from './components/Board'
-import Welcome from './components/Welcome'
+import Home from './components/Home'
 import Header from './components/Header'
 import Login from './components/Login'
 import Register from './components/Register'
@@ -13,8 +12,7 @@ function App() {
     <>
       <Header />
       <Routes>
-        <Route path="/" element={<Welcome />} />
-        <Route path="/board" element={<Board />} /> 
+        <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
       </Routes>
