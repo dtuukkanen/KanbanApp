@@ -28,7 +28,7 @@ const Welcome = () => {
         return response.json();
       })
       .then(data => {
-        setUsername(data.email);
+        setUsername(data.username);
       })
       .catch(err => {
         console.error(err);
