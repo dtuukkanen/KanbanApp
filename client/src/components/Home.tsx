@@ -2,11 +2,12 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Board from './Board'
 import { Link } from 'react-router-dom'
+import { UserData, BoardData } from '../types/types'
 
 const Home = () => {
   const [username, setUsername] = useState<string>('');
   const [userId, setUserId] = useState<string>('');
-  const [boardIds, setBoardIds] = useState<string[]>([]);
+  const [boards, setBoards] = useState<BoardData[]>([]);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const navigate = useNavigate();
 
@@ -32,7 +33,8 @@ const Home = () => {
       .then(data => {
         setUsername(data.username);
         setUserId(data.id);
-        return fetch(`/api/auth/getBoards/${data.id}`, {
+        // Now fetch aggregated board data.
+        return fetch(`/api/boards`, {
           headers: {
             'Authorization': `Bearer ${token}`
           }
@@ -44,8 +46,9 @@ const Home = () => {
         }
         return response.json();
       })
-      .then(data => {
-        setBoardIds(data);
+      .then((data: {boards: BoardData[]}) => {
+        // Assume the aggregation returns an object with a "boards" array.
+        setBoards(data.boards);
       })
       .catch(err => {
         console.error(err);
@@ -73,8 +76,8 @@ const Home = () => {
               Kanban Board
             </h2>
             <div className='mt-8 flex justify-center space-x-4'>
-              {boardIds.map((boardId) => (
-                <Board key={boardId} boardId={boardId} />
+              {boards.map((board) => (
+                <Board key={board._id} boardData={board} />
               ))}
             </div>
           </>

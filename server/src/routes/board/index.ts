@@ -1,10 +1,10 @@
 import { Router } from 'express';
 import addBoardRouter from './addBoard';
-import getColumnsRouter from './getColumns';
+import getUserBoardDataRouter from './getUserBoardData';
 
 const boardRouter = Router();
 
 boardRouter.use('/', addBoardRouter);
-boardRouter.use('/', getColumnsRouter);
+boardRouter.use('/', getUserBoardDataRouter);
 
 export default boardRouter;

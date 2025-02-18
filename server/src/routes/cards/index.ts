@@ -2,7 +2,6 @@ import { Router } from 'express';
 import addCardRouter from './addCard';
 import moveCardRouter from './moveCard';
 import deleteCardRouter from './deleteCard';
-import getCardRouter from './getCard';
 
 const cardsRouter = Router();
 
@@ -15,7 +14,5 @@ cardsRouter.put('/:cardId/move', moveCardRouter);
 // DELETE /cards/:cardId - Delete a card.
 cardsRouter.delete('/:cardId', deleteCardRouter);
 
-// GET /cards/:cardId - Get a card.
-cardsRouter.get('/:cardId', getCardRouter);
 
 export default cardsRouter;
