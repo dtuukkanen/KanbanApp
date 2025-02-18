@@ -2,11 +2,10 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Board from './Board'
 import { Link } from 'react-router-dom'
-import { UserData, BoardData } from '../types/types'
+import { BoardData } from '../types/types'
 
 const Home = () => {
   const [username, setUsername] = useState<string>('');
-  const [userId, setUserId] = useState<string>('');
   const [boards, setBoards] = useState<BoardData[]>([]);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const navigate = useNavigate();
@@ -32,7 +31,6 @@ const Home = () => {
       })
       .then(data => {
         setUsername(data.username);
-        setUserId(data.id);
         // Now fetch aggregated board data.
         return fetch(`/api/boards`, {
           headers: {
