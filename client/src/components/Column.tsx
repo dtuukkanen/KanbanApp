@@ -46,7 +46,7 @@ const Column = ({ columnData }: ColumnProps) => {
 
   return (
     <div className="divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow-sm p-4">
-      <h1 className="px-6 py-4 text-lg font-semibold">{columnData.title}</h1>
+      <h1 className="px-6 py-4 text-lg font-bold">{columnData.title}</h1>
       
       <ul role="list" className="space-y-3">
         {(cards || []).map((card: CardData) => (
