@@ -4,7 +4,7 @@ import validateToken from '../../middleware/auth/validateToken';
 
 const renameColumnRouter = Router();
 
-renameColumnRouter.put('/:columnId', validateToken, async (req, res) => {
+renameColumnRouter.patch('/:columnId', validateToken, async (req, res) => {
     try {
         const { columnId } = req.params;
         const { newTitle } = req.body;
