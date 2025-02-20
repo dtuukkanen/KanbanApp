@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { KanbanCardModel } from '../../models/KanbanCard';
-import { KanbanColumnModel } from '../../models/KanbanColumn';
+import { CardModel } from '../../models/Card';
+import { ColumnModel } from '../../models/Column';
 import validateToken from '../../middleware/auth/validateToken';
 
 const deleteColumnRouter = Router();
@@ -9,11 +9,11 @@ deleteColumnRouter.delete('/:columnId', validateToken, async (req, res) => {
     try {
         const { columnId } = req.params;
     
-        const column = await KanbanColumnModel.findById(columnId);
+        const column = await ColumnModel.findById(columnId);
         if (!column) {
             return void res.status(404).json({ message: "Column not found" });
         } else {
-            await KanbanCardModel.deleteMany({ _id: { $in: column.cardIds } });
+            await CardModel.deleteMany({ _id: { $in: column.cards } });
             await column.deleteOne();
             return void res.status(200).json({ message: "Column deleted" });
         }

@@ -16,7 +16,7 @@ const UserSchema: Schema = new Schema({
     boards: {
         type: [mongoose.Types.ObjectId],
         ref: "Board",
-        required: false
+        default: []
     }
 });
 

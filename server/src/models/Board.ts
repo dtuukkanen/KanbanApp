@@ -11,7 +11,7 @@ const BoardSchema: Schema = new Schema({
     title: { type: String, required: true },
     columns: [{
         type: mongoose.Types.ObjectId,
-        ref: "KanbanColumn",
+        ref: "Column",
         default: []
     }]
 });

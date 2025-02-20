@@ -1,5 +1,4 @@
 import { Router } from 'express';
-import mongoose from 'mongoose';
 import validateToken from '../../middleware/auth/validateToken';
 import { UserModel } from '../../models/User';
 
@@ -10,45 +9,29 @@ getUserBoardDataRouter.get('/', validateToken, async (req, res) => {
     // Get the user id from the validated token
     const userId = (req as any).token.id;
 
-    // Aggregate starting from the User document
-    const aggregatedData = await UserModel.aggregate([
-      { $match: { _id: new mongoose.Types.ObjectId(String(userId)) } },
-      {
-        $lookup: {
-          from: 'boards',
-          localField: 'boards',
-          foreignField: '_id',
-          as: 'boards'
-        }
-      },
-      {
-        $unwind: '$boards'
-      },
-      {
-        $lookup: {
-          from: 'kanbancolumns',
-          localField: 'boards.columns',
-          foreignField: '_id',
-          as: 'boards.columns'
-        }
-      },
-      {
-        $group: {
-          _id: '$_id',
-          username: { $first: '$username' },
-          boards: { $push: '$boards' }
-        }
-      }
-    ]);
+    // Find the user and populate boards, then columns, then cards for each column
+    const userData = await UserModel.findOne({ _id: userId })
+      .populate({
+        path: 'boards',
+        populate: [
+          {
+            path: 'columns',
+            populate: {
+              path: 'cards'
+            }
+          }
+        ]
+      })
+      .exec();
 
-    if (!aggregatedData || aggregatedData.length === 0) {
+    if (!userData) {
       return void res.status(404).json({ message: 'User or boards not found' });
     }
 
-    // Return the first (and only) user document with boards
-    return void res.status(200).json(aggregatedData[0]);
+    // Return the populated user document including boards, columns, and cards.
+    return void res.status(200).json(userData);
   } catch (error: any) {
-    console.error("Error aggregating user board data:", error);
+    console.error("Error populating user board data:", error);
     return void res.status(500).json({ message: "Internal server error" });
   }
 });

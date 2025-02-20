@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { KanbanColumnModel } from '../../models/KanbanColumn';
+import { ColumnModel } from '../../models/Column';
 import validateToken from '../../middleware/auth/validateToken';
 import { BoardModel } from '../../models/Board';
 import mongoose from 'mongoose';
@@ -21,7 +21,7 @@ createColumnRouter.post('/:boardId', validateToken, async (req, res) => {
         }
 
         // Create a new column document
-        const newColumn = new KanbanColumnModel({ title });
+        const newColumn = new ColumnModel({ title });
         await newColumn.save();
 
         // Add the new column to the board
@@ -30,7 +30,7 @@ createColumnRouter.post('/:boardId', validateToken, async (req, res) => {
 
         return void res.status(201).send(newColumn);
     } catch (error: any) {
-        console.error("Error saving kanban card:", error);
+        console.error("Error saving card:", error);
         return void res.status(500).json({ message: "Internal server error" });
     }
 });

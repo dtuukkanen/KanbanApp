@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { KanbanColumnModel } from '../../models/KanbanColumn';
+import { ColumnModel } from '../../models/Column';
 import validateToken from '../../middleware/auth/validateToken';
 
 const renameColumnRouter = Router();
@@ -9,7 +9,7 @@ renameColumnRouter.put('/:columnId', validateToken, async (req, res) => {
         const { columnId } = req.params;
         const { newTitle } = req.body;
     
-        const column = await KanbanColumnModel.findById(columnId);
+        const column = await ColumnModel.findById(columnId);
         if (!column) {
             return void res.status(404).json({ message: "Column not found" });
         } else {

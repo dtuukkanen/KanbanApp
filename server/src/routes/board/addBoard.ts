@@ -31,7 +31,7 @@ addBoardRouter.post('/:userId', validateToken, async (req, res) => {
         // Return the new board
         return void res.status(201).send(newBoard);
     } catch (error: any) {
-        console.error("Error saving kanban card:", error);
+        console.error("Error saving card:", error);
         return void res.status(500).json({ message: "Internal server error" });
     }
 });

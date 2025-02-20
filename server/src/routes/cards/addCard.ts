@@ -1,35 +1,36 @@
 import { Router } from 'express';
-import { KanbanColumnModel } from '../../models/KanbanColumn';
-import { KanbanCardModel } from '../../models/KanbanCard';
+import { ColumnModel } from '../../models/Column';
+import { CardModel } from '../../models/Card';
 import mongoose from 'mongoose';
 import validateToken from '../../middleware/auth/validateToken';
 
 const addCardRouter = Router();
 
-addCardRouter.post('/', validateToken, async (req, res) => {
+addCardRouter.post('/:columnId', validateToken, async (req, res) => {
     try {
         // Extract the title, description, color, tags, and version from the request body
-        const { title, description, color, tags, version, columnId } = req.body;
+        const { columnId } = req.params;
+        const { title, description, color, tags, version} = req.body;
 
-        // Create a new KanbanCard document
-        const newCard = new KanbanCardModel({ title, description, color, tags, version });
+        // Create a new Card document
+        const newCard = new CardModel({ title, description, color, tags, version });
 
         // Find the column that the new card belongs to
-        const column = await KanbanColumnModel.findById(columnId);
+        const column = await ColumnModel.findById(columnId);
         if (!column) {
             return void res.status(404).json({ message: "Column not found" });
         } else {
             // Add the new card to the column
-            column.cardIds.push(newCard._id as mongoose.Types.ObjectId);
+            column.cards.push(newCard._id as mongoose.Types.ObjectId);
             await column.save();
 
-            // Save the new KanbanCard document
+            // Save the new Card document
             await newCard.save();
         }
 
         return void res.status(201).send(newCard);
     } catch (error: any) {
-        console.error("Error saving kanban card:", error);
+        console.error("Error saving card:", error);
         return void res.status(500).json({ message: "Internal server error" });
     }
 });
