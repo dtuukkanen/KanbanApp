@@ -4,9 +4,10 @@ import { CardData, ColumnData } from "../types/types";
 
 interface ColumnProps {
   columnData: ColumnData;
+  onDeleteColumn: (columnId: string) => void;
 }
 
-const Column = ({ columnData }: ColumnProps) => {
+const Column = ({ columnData, onDeleteColumn }: ColumnProps) => {
   // Local state for cards; default to empty array if undefined.
   const [cards, setCards] = useState<CardData[]>(columnData.cards || []);
   // Local state for column title editing.
@@ -94,7 +95,7 @@ const Column = ({ columnData }: ColumnProps) => {
 
   return (
     <div className="divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow-sm p-4">
-      {/* Column Title Section */}
+      {/* Column Title and Delete Column */}
       <div className="flex items-center justify-between">
         {isEditingTitle ? (
           <div className="flex items-center space-x-2">
@@ -123,12 +124,22 @@ const Column = ({ columnData }: ColumnProps) => {
         ) : (
           <>
             <h1 className="px-6 py-4 text-lg font-bold">{columnTitle}</h1>
-            <button 
-              onClick={() => setIsEditingTitle(true)}
-              className="text-sm text-blue-600 hover:underline"
-            >
-              Edit
-            </button>
+            <div className="flex space-x-2">
+              <button 
+                onClick={() => setIsEditingTitle(true)}
+                className="text-sm text-blue-600 hover:underline"
+              >
+                Edit
+              </button>
+              {onDeleteColumn && (
+                <button
+                  onClick={() => onDeleteColumn(columnData._id)}
+                  className="text-sm text-red-600 hover:underline"
+                >
+                  Delete column
+                </button>
+              )}
+            </div>
           </>
         )}
       </div>
@@ -137,7 +148,7 @@ const Column = ({ columnData }: ColumnProps) => {
       <ul role="list" className="space-y-3">
         {(cards || []).map((card: CardData) => (
           <li key={card._id} className="overflow-hidden rounded-md bg-white px-6 py-4">
-            <Card cardData={card} onDelete={deleteCard} />
+            <Card cardData={card} onDeleteCard={deleteCard} />
           </li>
         ))}
       </ul>
