@@ -5,10 +5,10 @@ import validateToken from '../../middleware/auth/validateToken';
 
 const deleteCardRouter = Router();
 
-deleteCardRouter.delete('/:columnId', validateToken, async (req, res) => {
+deleteCardRouter.delete('/:cardId', validateToken, async (req, res) => {
     try {
-        const { columnId } = req.params;
-        const { cardId } = req.body;
+        const { cardId } = req.params
+        const { columnId } = req.body;
 
         // Find the column that the new card belongs to
         const column = await ColumnModel.findById(columnId);

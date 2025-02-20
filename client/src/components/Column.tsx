@@ -15,6 +15,7 @@ const Column = ({ columnData }: ColumnProps) => {
   const [newCardDescription, setNewCardDescription] = useState<string>("");
   const token = localStorage.getItem("token");
 
+  // Handler for adding a card.
   const handleAddCard = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
@@ -39,9 +40,32 @@ const Column = ({ columnData }: ColumnProps) => {
     }
   };
 
+  // Handler for cancelling the add card form.
   const handleCancel = () => {
     setNewCardTitle("");
+    setNewCardDescription("");
     setIsAddingCard(false);
+  };
+
+  // Handler for deleting a card.
+  const deleteCard = async (cardId: string) => {
+    try {
+      const response = await fetch(`/api/cards/${cardId}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify({ columnId: columnData._id })
+      });
+      if (!response.ok) {
+        throw new Error("Failed to delete card");
+      }
+      // Remove the card from local state immediately.
+      setCards(prev => prev.filter(card => card._id !== cardId));
+    } catch (error) {
+      console.error("Error deleting card:", error);
+    }
   };
 
   return (
@@ -51,7 +75,7 @@ const Column = ({ columnData }: ColumnProps) => {
       <ul role="list" className="space-y-3">
         {(cards || []).map((card: CardData) => (
           <li key={card._id} className="overflow-hidden rounded-md bg-white px-6 py-4">
-            <Card cardData={card} />
+            <Card cardData={card} onDelete={deleteCard} />
           </li>
         ))}
       </ul>
