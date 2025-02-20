@@ -9,11 +9,35 @@ interface ColumnProps {
 const Column = ({ columnData }: ColumnProps) => {
   // Local state for cards; default to empty array if undefined.
   const [cards, setCards] = useState<CardData[]>(columnData.cards || []);
+  // Local state for column title editing.
+  const [columnTitle, setColumnTitle] = useState<string>(columnData.title);
+  const [isEditingTitle, setIsEditingTitle] = useState<boolean>(false);
+
   // When true, show the add card form
   const [isAddingCard, setIsAddingCard] = useState<boolean>(false);
   const [newCardTitle, setNewCardTitle] = useState<string>("");
   const [newCardDescription, setNewCardDescription] = useState<string>("");
   const token = localStorage.getItem("token");
+
+  // Handler for updating the column title via API.
+  const handleTitleSave = async () => {
+    try {
+      const response = await fetch(`/api/columns/${columnData._id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify({ newTitle: columnTitle })
+      });
+      if (!response.ok) {
+        throw new Error("Failed to update column title");
+      }
+      setIsEditingTitle(false);
+    } catch (error) {
+      console.error("Error updating column title:", error);
+    }
+  };
 
   // Handler for adding a card.
   const handleAddCard = async (e: React.FormEvent) => {
@@ -70,8 +94,46 @@ const Column = ({ columnData }: ColumnProps) => {
 
   return (
     <div className="divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow-sm p-4">
-      <h1 className="px-6 py-4 text-lg font-bold">{columnData.title}</h1>
-      
+      {/* Column Title Section */}
+      <div className="flex items-center justify-between">
+        {isEditingTitle ? (
+          <div className="flex items-center space-x-2">
+            <input
+              type="text"
+              value={columnTitle}
+              onChange={(e) => setColumnTitle(e.target.value)}
+              className="px-3 py-2 border rounded"
+            />
+            <button 
+              onClick={handleTitleSave} 
+              className="px-3 py-2 bg-indigo-600 text-white rounded"
+            >
+              Save
+            </button>
+            <button 
+              onClick={() => {
+                setColumnTitle(columnData.title);
+                setIsEditingTitle(false);
+              }}
+              className="px-3 py-2 bg-gray-400 text-white rounded"
+            >
+              Cancel
+            </button>
+          </div>
+        ) : (
+          <>
+            <h1 className="px-6 py-4 text-lg font-bold">{columnTitle}</h1>
+            <button 
+              onClick={() => setIsEditingTitle(true)}
+              className="text-sm text-blue-600 hover:underline"
+            >
+              Edit
+            </button>
+          </>
+        )}
+      </div>
+
+      {/* Cards List */}
       <ul role="list" className="space-y-3">
         {(cards || []).map((card: CardData) => (
           <li key={card._id} className="overflow-hidden rounded-md bg-white px-6 py-4">
@@ -80,14 +142,14 @@ const Column = ({ columnData }: ColumnProps) => {
         ))}
       </ul>
       
-      {/* Add card form */}
+      {/* Add Card Form */}
       {isAddingCard ? (
-        <form onSubmit={handleAddCard} className="mt-4 flex flex-col space-x-2">
+        <form onSubmit={handleAddCard} className="mt-4 flex flex-col space-y-2">
           <input
             type="text"
             value={newCardTitle}
             onChange={(e) => setNewCardTitle(e.target.value)}
-            className="px-3 py-2 border rounded flex-grow"
+            className="px-3 py-2 border rounded"
             placeholder="Card title"
             required
           />
@@ -95,23 +157,25 @@ const Column = ({ columnData }: ColumnProps) => {
             type="text"
             value={newCardDescription}
             onChange={(e) => setNewCardDescription(e.target.value)}
-            className="px-3 py-2 border rounded flex-grow"
+            className="px-3 py-2 border rounded"
             placeholder="Card description"
             required
           />
-          <button 
-            type="submit" 
-            className="px-4 py-2 bg-indigo-600 text-white rounded"
-          >
-            Save
-          </button>
-          <button 
-            type="button"
-            onClick={handleCancel}
-            className="px-4 py-2 bg-gray-400 text-white rounded"
-          >
-            Cancel
-          </button>
+          <div className="flex space-x-2">
+            <button 
+              type="submit" 
+              className="px-4 py-2 bg-indigo-600 text-white rounded"
+            >
+              Save
+            </button>
+            <button 
+              type="button"
+              onClick={handleCancel}
+              className="px-4 py-2 bg-gray-400 text-white rounded"
+            >
+              Cancel
+            </button>
+          </div>
         </form>
       ) : (
         <button
