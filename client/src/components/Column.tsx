@@ -1,6 +1,9 @@
 import { useState } from "react";
 import Card from "./Card";
 import { CardData, ColumnData } from "../types/types";
+import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
+// Import useDroppable to allow dropping into empty columns
+import { useDroppable } from "@dnd-kit/core";
 
 interface ColumnProps {
   columnData: ColumnData;
@@ -19,6 +22,9 @@ const Column = ({ columnData, onDeleteColumn }: ColumnProps) => {
   const [newCardTitle, setNewCardTitle] = useState<string>("");
   const [newCardDescription, setNewCardDescription] = useState<string>("");
   const token = localStorage.getItem("token");
+
+  // Use useDroppable with column id so that an empty column is droppable.
+  const { setNodeRef } = useDroppable({ id: columnData._id });
 
   // Handler for updating the column title via API.
   const handleTitleSave = async () => {
@@ -145,13 +151,19 @@ const Column = ({ columnData, onDeleteColumn }: ColumnProps) => {
       </div>
 
       {/* Cards List */}
-      <ul role="list" className="space-y-3">
-        {(cards || []).map((card: CardData) => (
-          <li key={card._id} className="overflow-hidden rounded-md bg-white px-6 py-4">
-            <Card cardData={card} onDeleteCard={deleteCard} />
-          </li>
-        ))}
-      </ul>
+      <SortableContext items={(cards || []).map(card => card._id)} strategy={verticalListSortingStrategy}>
+        {/* Wrap the list with a droppable container */}
+        <div ref={setNodeRef} className={cards.length === 0 ? "min-h-12" : ""}>
+          <ul role="list" className="space-y-3">
+            {(cards || []).map((card: CardData) => (
+              // Changed "overflow-hidden" to "overflow-visible" to prevent clipping during dragging.
+              <li key={card._id} className="overflow-visible rounded-md bg-white px-6 py-4">
+                <Card cardData={card} onDeleteCard={deleteCard} />
+              </li>
+            ))}
+          </ul>
+        </div>
+      </SortableContext>
       
       {/* Add Card Form */}
       {isAddingCard ? (
