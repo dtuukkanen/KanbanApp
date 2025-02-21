@@ -25,8 +25,13 @@ const Card = ({ cardData, onDeleteCard }: CardProps) => {
       <div className="px-4 py-5 sm:px-6 font-semibold flex items-center justify-between">
         <span>{cardData.title}</span>
         <button
-          onClick={() => onDeleteCard(cardData._id)}
-          className="ml-2 text-sm text-red-600 hover:underline" 
+          onPointerDown={(e) => e.stopPropagation()} // Prevent any pointer events from bubbling up
+          onMouseDown={(e) => e.stopPropagation()}   // Also stop mouse events
+          onClick={(e) => { 
+            e.stopPropagation(); 
+            onDeleteCard(cardData._id); 
+          }}
+          className="ml-2 text-sm text-red-600 hover:underline"
         >
           Delete
         </button>
