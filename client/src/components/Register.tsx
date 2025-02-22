@@ -1,34 +1,34 @@
-import { Link, useNavigate } from 'react-router-dom'
-import { useState } from 'react'
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 const Register = () => {
-  const [username, setUsername] = useState<string>('')
-  const [email, setEmail] = useState<string>('')
-  const [password, setPassword] = useState<string>('')
-  const [error, setError] = useState<string | null>(null)
+  const [username, setUsername] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
   // Handle form submission
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
+    e.preventDefault();
 
     try {
-      const response = await fetch('/api/auth/register', {
-        method: 'POST',
+      const response = await fetch("/api/auth/register", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ username, email, password }),
       });
 
       if (!response.ok) {
-        const data = await response.json()
-        throw new Error(data.message || 'Registration failed')
+        const data = await response.json();
+        throw new Error(data.message || "Registration failed");
       }
 
-      navigate('/login')
+      navigate("/login");
     } catch (error: any) {
-      setError(error.message || 'Registration failed')
+      setError(error.message || "Registration failed");
     }
   };
 
@@ -59,10 +59,12 @@ const Register = () => {
         {/* Register form */}
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
           <form onSubmit={handleSubmit} className="space-y-6">
-
             {/* Username input */}
             <div>
-              <label htmlFor="email" className="block text-sm/6 font-medium text-gray-900">
+              <label
+                htmlFor="email"
+                className="block text-sm/6 font-medium text-gray-900"
+              >
                 Username
               </label>
               <div className="mt-2">
@@ -81,7 +83,10 @@ const Register = () => {
 
             {/* Email input */}
             <div>
-              <label htmlFor="email" className="block text-sm/6 font-medium text-gray-900">
+              <label
+                htmlFor="email"
+                className="block text-sm/6 font-medium text-gray-900"
+              >
                 Email address
               </label>
               <div className="mt-2">
@@ -100,7 +105,10 @@ const Register = () => {
 
             {/* Password input */}
             <div>
-              <label htmlFor="password" className="block text-sm/6 font-medium text-gray-900">
+              <label
+                htmlFor="password"
+                className="block text-sm/6 font-medium text-gray-900"
+              >
                 Password
               </label>
               <div className="mt-2">
@@ -118,7 +126,7 @@ const Register = () => {
             </div>
 
             {/* Display error message */}
-            {error && <p className='text-red-500'>{error}</p>}
+            {error && <p className="text-red-500">{error}</p>}
 
             {/* Register button */}
             <div>
@@ -133,10 +141,10 @@ const Register = () => {
 
           {/* Login link */}
           <p className="mt-10 text-center text-sm/6 text-gray-500">
-            Already have an account?{' '}
+            Already have an account?{" "}
             <Link
               to="/login"
-              className='font-semibold text-indigo-600 hover:text-indigo-500'
+              className="font-semibold text-indigo-600 hover:text-indigo-500"
             >
               Login
             </Link>
@@ -144,7 +152,7 @@ const Register = () => {
         </div>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default Register
+export default Register;

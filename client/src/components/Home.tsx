@@ -1,57 +1,57 @@
-import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import Board from './Board'
-import { Link } from 'react-router-dom'
-import { BoardData } from '../types/types'
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Board from "./Board";
+import { Link } from "react-router-dom";
+import { BoardData } from "../types/types";
 
 const Home = () => {
-  const [username, setUsername] = useState<string>('')
-  const [boards, setBoards] = useState<BoardData[]>([])
-  const [errorMsg, setErrorMsg] = useState<string | null>(null)
-  const navigate = useNavigate()
+  const [username, setUsername] = useState<string>("");
+  const [boards, setBoards] = useState<BoardData[]>([]);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const token = localStorage.getItem('token')
+    const token = localStorage.getItem("token");
     if (!token) {
-      setErrorMsg('Not authenticated')
-      return
+      setErrorMsg("Not authenticated");
+      return;
     }
-    
+
     // First call "me" to get user info.
-    fetch('/api/auth/me', {
+    fetch("/api/auth/me", {
       headers: {
-        'Authorization': `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+      },
     })
-      .then(response => {
+      .then((response) => {
         if (!response.ok) {
-          throw new Error("Not authenticated")
+          throw new Error("Not authenticated");
         }
-        return response.json()
+        return response.json();
       })
-      .then(data => {
-        setUsername(data.username)
+      .then((data) => {
+        setUsername(data.username);
         // Now fetch aggregated board data.
         return fetch(`/api/boards`, {
           headers: {
-            'Authorization': `Bearer ${token}`
-          }
-        })
+            Authorization: `Bearer ${token}`,
+          },
+        });
       })
-      .then(response => {
+      .then((response) => {
         if (!response.ok) {
-          throw new Error("Failed to fetch boards")
+          throw new Error("Failed to fetch boards");
         }
-        return response.json()
+        return response.json();
       })
       .then((data: { boards: BoardData[] }) => {
-        setBoards(data.boards)
+        setBoards(data.boards);
       })
-      .catch(err => {
-        console.error(err)
-        setErrorMsg(err.message)
-      })
-  }, [navigate])
+      .catch((err) => {
+        console.error(err);
+        setErrorMsg(err.message);
+      });
+  }, [navigate]);
 
   return (
     <div className="bg-white px-6 py-24 sm:py-32 lg:px-8">
@@ -62,18 +62,17 @@ const Home = () => {
               User is not authenticated.
             </p>
             <p className="mt-8 text-lg font-medium text-gray-500">
-              Please{' '}
+              Please{" "}
               <Link to="/login" className="text-indigo-600">
                 log in
-              </Link>.
+              </Link>
+              .
             </p>
           </>
         ) : (
           <>
             {errorMsg && (
-              <p className="text-base font-semibold text-red-600">
-                {errorMsg}
-              </p>
+              <p className="text-base font-semibold text-red-600">{errorMsg}</p>
             )}
             <p className="text-base font-semibold text-indigo-600">
               Welcome, {username}
@@ -90,7 +89,7 @@ const Home = () => {
         )}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;

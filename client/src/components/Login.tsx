@@ -1,38 +1,38 @@
-import { Link } from 'react-router-dom'
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link } from "react-router-dom";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const [email, setEmail] = useState<string>('')
-  const [password, setPassword] = useState<string>('')
-  const [error, setError] = useState<string | null>(null)
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
   // Handle form submission
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
+    e.preventDefault();
 
     try {
-      const response = await fetch('/api/auth/login', {
-        method: 'POST',
+      const response = await fetch("/api/auth/login", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ email, password }),
       });
 
       if (!response.ok) {
-        const data = await response.json()
-        throw new Error(data.message || 'Login failed')
+        const data = await response.json();
+        throw new Error(data.message || "Login failed");
       }
 
-      const data = await response.json()
-      localStorage.setItem('token', data.token)
+      const data = await response.json();
+      localStorage.setItem("token", data.token);
 
       // Redirect to the dashboard
-      navigate('/')
+      navigate("/");
     } catch (error: any) {
-      setError(error.message || 'Login failed')
+      setError(error.message || "Login failed");
     }
   };
 
@@ -63,10 +63,12 @@ const Login = () => {
         {/* Login form */}
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
           <form onSubmit={handleSubmit} className="space-y-6">
-
             {/* Email input */}
             <div>
-              <label htmlFor="email" className="block text-sm/6 font-medium text-gray-900">
+              <label
+                htmlFor="email"
+                className="block text-sm/6 font-medium text-gray-900"
+              >
                 Email address
               </label>
               <div className="mt-2">
@@ -85,7 +87,10 @@ const Login = () => {
 
             {/* Password input */}
             <div>
-              <label htmlFor="password" className="block text-sm/6 font-medium text-gray-900">
+              <label
+                htmlFor="password"
+                className="block text-sm/6 font-medium text-gray-900"
+              >
                 Password
               </label>
               <div className="mt-2">
@@ -103,8 +108,8 @@ const Login = () => {
             </div>
 
             {/* Display error message */}
-            { error && <p className="text-red-500">{error}</p> }
-        
+            {error && <p className="text-red-500">{error}</p>}
+
             {/* Submit button */}
             <div>
               <button
@@ -118,10 +123,10 @@ const Login = () => {
 
           {/* Register link */}
           <p className="mt-10 text-center text-sm/6 text-gray-500">
-            Don't have an account?{' '}
+            Don't have an account?{" "}
             <Link
               to="/register"
-              className='font-semibold text-indigo-600 hover:text-indigo-500'
+              className="font-semibold text-indigo-600 hover:text-indigo-500"
             >
               Register
             </Link>
@@ -129,7 +134,7 @@ const Login = () => {
         </div>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;

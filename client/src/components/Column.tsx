@@ -1,7 +1,10 @@
 import { useState } from "react";
 import Card from "./Card";
 import { CardData, ColumnData } from "../types/types";
-import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
+import {
+  SortableContext,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
 // Import useDroppable to allow dropping into empty columns
 import { useDroppable } from "@dnd-kit/core";
 
@@ -33,9 +36,9 @@ const Column = ({ columnData, onDeleteColumn }: ColumnProps) => {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`
+          Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ newTitle: columnTitle })
+        body: JSON.stringify({ newTitle: columnTitle }),
       });
       if (!response.ok) {
         throw new Error("Failed to update column title");
@@ -54,15 +57,18 @@ const Column = ({ columnData, onDeleteColumn }: ColumnProps) => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`
+          Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ title: newCardTitle, description: newCardDescription })
+        body: JSON.stringify({
+          title: newCardTitle,
+          description: newCardDescription,
+        }),
       });
       if (!response.ok) {
         throw new Error("Failed to add card");
       }
       const newCard = await response.json();
-      setCards(prev => [...prev, newCard as CardData]);
+      setCards((prev) => [...prev, newCard as CardData]);
       setNewCardTitle("");
       setNewCardDescription("");
       setIsAddingCard(false);
@@ -85,15 +91,15 @@ const Column = ({ columnData, onDeleteColumn }: ColumnProps) => {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`
+          Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ columnId: columnData._id })
+        body: JSON.stringify({ columnId: columnData._id }),
       });
       if (!response.ok) {
         throw new Error("Failed to delete card");
       }
       // Remove the card from local state immediately.
-      setCards(prev => prev.filter(card => card._id !== cardId));
+      setCards((prev) => prev.filter((card) => card._id !== cardId));
     } catch (error) {
       console.error("Error deleting card:", error);
     }
@@ -111,13 +117,13 @@ const Column = ({ columnData, onDeleteColumn }: ColumnProps) => {
               onChange={(e) => setColumnTitle(e.target.value)}
               className="px-3 py-2 border rounded"
             />
-            <button 
-              onClick={handleTitleSave} 
+            <button
+              onClick={handleTitleSave}
               className="px-3 py-2 bg-indigo-600 text-white rounded"
             >
               Save
             </button>
-            <button 
+            <button
               onClick={() => {
                 setColumnTitle(columnData.title);
                 setIsEditingTitle(false);
@@ -131,7 +137,7 @@ const Column = ({ columnData, onDeleteColumn }: ColumnProps) => {
           <>
             <h1 className="px-6 py-4 text-lg font-bold">{columnTitle}</h1>
             <div className="flex space-x-2">
-              <button 
+              <button
                 onClick={() => setIsEditingTitle(true)}
                 className="text-sm text-blue-600 hover:underline"
               >
@@ -151,20 +157,26 @@ const Column = ({ columnData, onDeleteColumn }: ColumnProps) => {
       </div>
 
       {/* Cards List */}
-      <SortableContext items={(cards || []).map(card => card._id)} strategy={verticalListSortingStrategy}>
+      <SortableContext
+        items={(cards || []).map((card) => card._id)}
+        strategy={verticalListSortingStrategy}
+      >
         {/* Wrap the list with a droppable container */}
         <div ref={setNodeRef} className={cards.length === 0 ? "min-h-12" : ""}>
           <ul role="list" className="space-y-3">
             {(cards || []).map((card: CardData) => (
               // Changed "overflow-hidden" to "overflow-visible" to prevent clipping during dragging.
-              <li key={card._id} className="overflow-visible rounded-md bg-white px-6 py-4">
+              <li
+                key={card._id}
+                className="overflow-visible rounded-md bg-white px-6 py-4"
+              >
                 <Card cardData={card} onDeleteCard={deleteCard} />
               </li>
             ))}
           </ul>
         </div>
       </SortableContext>
-      
+
       {/* Add Card Form */}
       {isAddingCard ? (
         <form onSubmit={handleAddCard} className="mt-4 flex flex-col space-y-2">
@@ -185,13 +197,13 @@ const Column = ({ columnData, onDeleteColumn }: ColumnProps) => {
             required
           />
           <div className="flex space-x-2">
-            <button 
-              type="submit" 
+            <button
+              type="submit"
               className="px-4 py-2 bg-indigo-600 text-white rounded"
             >
               Save
             </button>
-            <button 
+            <button
               type="button"
               onClick={handleCancel}
               className="px-4 py-2 bg-gray-400 text-white rounded"

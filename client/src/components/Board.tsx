@@ -2,7 +2,12 @@ import { useState } from "react";
 import Column from "./Column";
 import Card from "./Card";
 import { BoardData, ColumnData } from "../types/types";
-import { DndContext, DragEndEvent, DragStartEvent, DragOverlay } from "@dnd-kit/core";
+import {
+  DndContext,
+  DragEndEvent,
+  DragStartEvent,
+  DragOverlay,
+} from "@dnd-kit/core";
 
 interface BoardProps {
   boardData: BoardData;
@@ -57,9 +62,17 @@ const Board = ({ boardData }: BoardProps) => {
       return;
     }
     const newColumns = [...columns];
-    const movingCard = newColumns[activeLocation.colIndex].cards[activeLocation.cardIndex];
-    newColumns[activeLocation.colIndex].cards.splice(activeLocation.cardIndex, 1);
-    newColumns[overLocation.colIndex].cards.splice(overLocation.cardIndex, 0, movingCard);
+    const movingCard =
+      newColumns[activeLocation.colIndex].cards[activeLocation.cardIndex];
+    newColumns[activeLocation.colIndex].cards.splice(
+      activeLocation.cardIndex,
+      1
+    );
+    newColumns[overLocation.colIndex].cards.splice(
+      overLocation.cardIndex,
+      0,
+      movingCard
+    );
     setColumns(newColumns);
 
     // Call API to persist the move
@@ -68,13 +81,13 @@ const Board = ({ boardData }: BoardProps) => {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
           newColumnId: newColumns[overLocation.colIndex]._id,
           oldColumnId: newColumns[activeLocation.colIndex]._id,
-          newIndex: overLocation.cardIndex
-        })
+          newIndex: overLocation.cardIndex,
+        }),
       });
       if (!response.ok) {
         throw new Error("Failed to move card on server");
@@ -83,7 +96,7 @@ const Board = ({ boardData }: BoardProps) => {
     } catch (error) {
       console.error("Error updating card order:", error);
     }
-    
+
     setActiveId(null);
   };
 

@@ -1,10 +1,10 @@
-import { Router } from 'express';
-import validateToken from '../../middleware/auth/validateToken';
-import { UserModel } from '../../models/User';
+import { Router } from "express";
+import validateToken from "../../middleware/auth/validateToken";
+import { UserModel } from "../../models/User";
 
 const getUserBoardDataRouter = Router();
 
-getUserBoardDataRouter.get('/', validateToken, async (req, res) => {
+getUserBoardDataRouter.get("/", validateToken, async (req, res) => {
   try {
     // Get the user id from the validated token
     const userId = (req as any).token.id;
@@ -12,20 +12,20 @@ getUserBoardDataRouter.get('/', validateToken, async (req, res) => {
     // Find the user and populate boards, then columns, then cards for each column
     const userData = await UserModel.findOne({ _id: userId })
       .populate({
-        path: 'boards',
+        path: "boards",
         populate: [
           {
-            path: 'columns',
+            path: "columns",
             populate: {
-              path: 'cards'
-            }
-          }
-        ]
+              path: "cards",
+            },
+          },
+        ],
       })
       .exec();
 
     if (!userData) {
-      return void res.status(404).json({ message: 'User or boards not found' });
+      return void res.status(404).json({ message: "User or boards not found" });
     }
 
     // Return the populated user document including boards, columns, and cards.

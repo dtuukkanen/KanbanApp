@@ -8,7 +8,7 @@ meRouter.get("/", validateToken, async (req, res) => {
   try {
     // (req as any).token is set by validateToken
     const userId = (req as any).token.id;
-    
+
     const user = await UserModel.findById(userId);
     if (!user) {
       return void res.status(404).json({ message: "User not found" });
