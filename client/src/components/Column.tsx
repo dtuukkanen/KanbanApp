@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Card from "./Card";
 import { CardData, ColumnData } from "../types/types";
 import {
@@ -25,6 +25,11 @@ const Column = ({ columnData, onDeleteColumn }: ColumnProps) => {
   const [newCardTitle, setNewCardTitle] = useState<string>("");
   const [newCardDescription, setNewCardDescription] = useState<string>("");
   const token = localStorage.getItem("token");
+
+  // Synchronize local cards state when columnData.cards updates.
+  useEffect(() => {
+    setCards(columnData.cards || []);
+  }, [columnData.cards]);
 
   // Use useDroppable with column id so that an empty column is droppable.
   const { setNodeRef } = useDroppable({ id: columnData._id });
