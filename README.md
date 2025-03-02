@@ -43,7 +43,8 @@ I also used ChatGPT when I was not actively coding to give me ideas of how I cou
 | User has the option just to double click any edible content (column header) and edit it                               |   4    |
 | Cards and comments have visible timestamps when they have been created and updated (moving to another column updates) |   4    |
 | Test software for accessibility; can be used only with keyboard                                                       |   1    |
-| **TOTAL**                                                                                                             | **39** |
+| OWN SUGGESTION: Logout page where user can signout                                                                    |   1    |
+| **TOTAL**                                                                                                             | **40** |
 
 ## Technology choices
 
