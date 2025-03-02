@@ -7,13 +7,13 @@
 Stay in root directory and do the following:
 
 Client packages:<br>
-`npm preinstall`
+`npm run preinstall`
 
 Server packages:<br>
 `npm install`
 
 OR run both at the same time:<br>
-`npm preinstall && npm install`
+`npm run preinstall && npm install`
 
 ### Set .env file to server
 
