@@ -2,6 +2,7 @@ import { Router } from "express";
 import { ColumnModel } from "../../models/Column";
 import mongoose from "mongoose";
 import validateToken from "../../middleware/auth/validateToken";
+import { CardModel } from "../../models/Card";
 
 const moveCardRouter = Router();
 
@@ -79,6 +80,9 @@ moveCardRouter.put("/:cardId", validateToken, async (req, res) => {
           .status(404)
           .json({ message: "Card not found in old column" });
       }
+
+      // Update the card's date when moving between columns
+      await CardModel.findByIdAndUpdate(cardId, { date: new Date() });
 
       // Remove the card from the source column
       oldColumn.cards.splice(cardIndex, 1);
