@@ -41,6 +41,7 @@ I also used ChatGPT when I was not actively coding to give me ideas of how I cou
 | Utilization of a frontside framework, React                                             |   3    |
 | Cards can be reordered with drag and drop                                               |   2    |
 | User has the option just to double click any edible content (column header) and edit it |   4    |
+| Cards and comments have visible timestamps when they have been created and updated      |   4    |
 | **TOTAL**                                                                               | **34** |
 
 ## Technology choices
