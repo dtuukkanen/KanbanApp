@@ -50,17 +50,22 @@ I also used ChatGPT when I was not actively coding to give me ideas of how I cou
 
 ## Technology choices
 
-I decided to build my app with React, Express and TailwindCSS. I chose React and Express just because they were familiar to me from the course and Tailwind because it is familiar to me from previous own projects.
-
 ### Client side
 
 - React
+  - This tool was taught in this course and is much better than to use native JavaScript / TypeScript.
 - TailwindCSS
+  - This was familiar to me from previous projects, but since this was so large project, I should have probably used MaterialUI
 - dnd-kit
+  - First option was to build with react-beautiful-dnd but since it was deprecated I chose dnd-kit. I tried to Google other options, but did not find then that pragmatic-drag-and-drop is successsor of react-beautiful-dnd. Otherwise I would have maybe chosen that.
 
 ### Server side
 
 - Express
+  - Taught in our class and the most obvious choice because of popularity.
 - MongoDB
+  - Also taught in class and really popular database with good support.
 - JwtPayload
+  - Taught in class and easy to use.
 - bcrypt
+  - Taught in class and can encrypt and decrypt passwords.
