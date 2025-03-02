@@ -4,18 +4,14 @@ import mongoose, { Schema, Document } from "mongoose";
 interface Card extends Document {
   title: string;
   description: string;
-  color: string;
-  tags: string[];
-  version: number;
+  date: Date;
 }
 
 // Define the Card schema
 const CardSchema: Schema = new Schema({
   title: { type: String, required: true },
   description: { type: String, required: false },
-  color: { type: String, required: false },
-  tags: { type: [String], required: false },
-  version: { type: Number, required: false },
+  date: { type: Date, required: true, default: Date.now },
 });
 
 // Create the Card model

@@ -21,6 +21,23 @@ const Card = ({ cardData, onDeleteCard }: CardProps) => {
     transition,
   };
 
+  // Format the date and time
+  const formatDateTime = () => {
+    try {
+      const date = new Date(cardData.date);
+      const dateStr = date.toLocaleDateString();
+      const timeStr = date.toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit",
+      });
+      return `${dateStr} ${timeStr}`;
+    } catch (e) {
+      return "";
+    }
+  };
+
+  const formattedDateTime = cardData.date ? formatDateTime() : "";
+
   return (
     <div
       ref={setNodeRef}
@@ -46,6 +63,7 @@ const Card = ({ cardData, onDeleteCard }: CardProps) => {
         </button>
       </div>
       <div className="px-4 py-5 sm:p-6">{cardData.description}</div>
+      <p className="mt-2 text-xs text-grey-500">{formattedDateTime}</p>
     </div>
   );
 };

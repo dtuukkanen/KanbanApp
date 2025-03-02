@@ -19,7 +19,5 @@ export interface CardData {
   _id: string;
   title: string;
   description: string;
-  color: string;
-  tags: string[];
-  version: number;
+  date: Date;
 }
