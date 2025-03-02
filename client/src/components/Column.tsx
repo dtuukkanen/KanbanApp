@@ -135,7 +135,12 @@ const Column = ({ columnData, onDeleteColumn }: ColumnProps) => {
           </div>
         ) : (
           <>
-            <h1 className="px-6 py-4 text-lg font-bold">{columnTitle}</h1>
+            <h1
+              className="px-6 py-4 text-lg font-bold"
+              onDoubleClick={() => setIsEditingTitle(true)}
+            >
+              {columnTitle}
+            </h1>
             <div className="flex space-x-2">
               <button
                 onClick={() => setIsEditingTitle(true)}
