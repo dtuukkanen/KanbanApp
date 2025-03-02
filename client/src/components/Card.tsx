@@ -63,7 +63,7 @@ const Card = ({ cardData, onDeleteCard }: CardProps) => {
         </button>
       </div>
       <div className="px-4 py-5 sm:p-6">{cardData.description}</div>
-      <p className="mt-2 text-xs text-grey-500">{formattedDateTime}</p>
+      <p className="mt-2 text-xs text-gray-500">{formattedDateTime}</p>
     </div>
   );
 };
