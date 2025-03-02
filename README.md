@@ -27,6 +27,8 @@ Run client:<br>
 Run server:<br>
 `npm run dev:server`
 
+**Make sure MongoDB is running in the background in port 27017**
+
 ## AI Declaration
 
 I used GitHub Copilot for ideas of implementation, code generation, autocompletion and to clarify how certain things work.
@@ -42,7 +44,7 @@ I also used ChatGPT when I was not actively coding to give me ideas of how I cou
 | Cards can be reordered with drag and drop                                                                             |   2    |
 | User has the option just to double click any edible content (column header) and edit it                               |   4    |
 | Cards and comments have visible timestamps when they have been created and updated (moving to another column updates) |   4    |
-| Test software for accessibility; can be used only with keyboard                                                       |   1    |
+| Test software for accessibility; can be used with keyboard                                                            |   1    |
 | OWN SUGGESTION: Logout page where user can signout                                                                    |   1    |
 | **TOTAL**                                                                                                             | **40** |
 
