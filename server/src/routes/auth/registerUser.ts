@@ -1,11 +1,11 @@
-import { Router } from "express";
+import { Request, Response, Router } from "express";
 import { UserModel } from "../../models/User";
 import bcrypt from "bcryptjs";
 import { BoardModel } from "../../models/Board";
 
 const registerUserRouter = Router();
 
-registerUserRouter.post("/", async (req, res) => {
+registerUserRouter.post("/", async (req: Request, res: Response) => {
   try {
     const { username, email, password } = req.body;
 

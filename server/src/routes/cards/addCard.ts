@@ -1,4 +1,4 @@
-import { Router } from "express";
+import { Request, Response, Router } from "express";
 import { ColumnModel } from "../../models/Column";
 import { CardModel } from "../../models/Card";
 import mongoose from "mongoose";
@@ -6,7 +6,7 @@ import validateToken from "../../middleware/auth/validateToken";
 
 const addCardRouter = Router();
 
-addCardRouter.post("/:columnId", validateToken, async (req, res) => {
+addCardRouter.post("/:columnId", validateToken, async (req: Request, res: Response) => {
   try {
     // Extract the title, description, color, tags, and version from the request body
     const { columnId } = req.params;

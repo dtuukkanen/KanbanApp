@@ -1,10 +1,10 @@
-import { Router } from "express";
+import { Router, Request, Response } from "express";
 import validateToken from "../../middleware/auth/validateToken";
 import { UserModel } from "../../models/User";
 
 const meRouter = Router();
 
-meRouter.get("/", validateToken, async (req, res) => {
+meRouter.get("/", validateToken, async (req: Request, res: Response) => {
   try {
     // (req as any).token is set by validateToken
     const userId = (req as any).token.id;

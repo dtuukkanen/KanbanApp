@@ -1,4 +1,4 @@
-import { Router } from "express";
+import { Request, Response, Router } from "express";
 import { ColumnModel } from "../../models/Column";
 import validateToken from "../../middleware/auth/validateToken";
 
@@ -6,7 +6,7 @@ import validateToken from "../../middleware/auth/validateToken";
 const renameColumnRouter = Router();
 
 // Define the route for renaming a column
-renameColumnRouter.patch("/:columnId", validateToken, async (req, res) => {
+renameColumnRouter.patch("/:columnId", validateToken, async (req: Request, res: Response) => {
   try {
     // Extract columnId from the parameters
     const { columnId } = req.params;

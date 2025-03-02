@@ -1,10 +1,10 @@
-import { Router } from "express";
+import { Request, Response, Router } from "express";
 import validateToken from "../../middleware/auth/validateToken";
 import { UserModel } from "../../models/User";
 
 const getUserBoardDataRouter = Router();
 
-getUserBoardDataRouter.get("/", validateToken, async (req, res) => {
+getUserBoardDataRouter.get("/", validateToken, async (req: Request, res: Response) => {
   try {
     // Get the user id from the validated token
     const userId = (req as any).token.id;

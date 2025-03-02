@@ -1,4 +1,4 @@
-import { Router } from "express";
+import { Request, Response, Router } from "express";
 import mongoose from "mongoose";
 import validateToken from "../../middleware/auth/validateToken";
 import { BoardModel } from "../../models/Board";
@@ -6,7 +6,7 @@ import { UserModel } from "../../models/User";
 
 const addBoardRouter = Router();
 
-addBoardRouter.post("/:userId", validateToken, async (req, res) => {
+addBoardRouter.post("/:userId", validateToken, async (req: Request, res: Response) => {
   try {
     // Extract the title from the request body
     const { userId } = req.params;

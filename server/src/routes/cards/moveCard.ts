@@ -1,4 +1,4 @@
-import { Router } from "express";
+import { Request, Response, Router } from "express";
 import { ColumnModel } from "../../models/Column";
 import mongoose from "mongoose";
 import validateToken from "../../middleware/auth/validateToken";
@@ -14,7 +14,7 @@ const arrayMove = (array: any[], from: number, to: number) => {
   return newArray;
 };
 
-moveCardRouter.put("/:cardId", validateToken, async (req, res) => {
+moveCardRouter.put("/:cardId", validateToken, async (req: Request, res: Response) => {
   try {
     // Extract cardId from the route parameter
     const { cardId } = req.params;

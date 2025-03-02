@@ -1,11 +1,11 @@
-import { Router } from "express";
+import { Request, Response, Router } from "express";
 import { ColumnModel } from "../../models/Column";
 import { CardModel } from "../../models/Card";
 import validateToken from "../../middleware/auth/validateToken";
 
 const deleteCardRouter = Router();
 
-deleteCardRouter.delete("/:cardId", validateToken, async (req, res) => {
+deleteCardRouter.delete("/:cardId", validateToken, async (req: Request, res: Response) => {
   try {
     // Extract cardId from parameters
     const { cardId } = req.params;

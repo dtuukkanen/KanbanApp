@@ -1,4 +1,4 @@
-import { Router } from "express";
+import { Request, Response, Router } from "express";
 import { ColumnModel } from "../../models/Column";
 import validateToken from "../../middleware/auth/validateToken";
 import { BoardModel } from "../../models/Board";
@@ -6,7 +6,7 @@ import mongoose from "mongoose";
 
 const createColumnRouter = Router();
 
-createColumnRouter.post("/:boardId", validateToken, async (req, res) => {
+createColumnRouter.post("/:boardId", validateToken, async (req: Request, res: Response) => {
   try {
     // Extract boardId from the parameters
     const { boardId } = req.params;

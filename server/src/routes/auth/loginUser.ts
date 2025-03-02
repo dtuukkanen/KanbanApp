@@ -1,11 +1,11 @@
-import { Router } from "express";
+import { Router, Request, Response } from "express";
 import { UserModel } from "../../models/User";
 import bcrypt from "bcryptjs";
 import jwt, { JwtPayload } from "jsonwebtoken";
 
 const loginUserRouter = Router();
 
-loginUserRouter.post("/", async (req, res) => {
+loginUserRouter.post("/", async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
 
