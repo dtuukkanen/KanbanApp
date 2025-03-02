@@ -17,6 +17,8 @@ createColumnRouter.post("/:boardId", validateToken, async (req, res) => {
 
     // Find the board
     const board = await BoardModel.findById(boardId);
+
+    // If the board does not exist, return a 404 error
     if (!board) {
       console.error("Board not found");
       return void res.status(404).json({ message: "Board not found" });
@@ -30,6 +32,7 @@ createColumnRouter.post("/:boardId", validateToken, async (req, res) => {
     board.columns.push(newColumn._id as mongoose.Types.ObjectId);
     await board.save();
 
+    // Return the newly created column
     return void res.status(201).send(newColumn);
   } catch (error: any) {
     console.error("Error saving card:", error);
