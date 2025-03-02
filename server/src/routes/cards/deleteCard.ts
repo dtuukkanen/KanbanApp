@@ -7,7 +7,9 @@ const deleteCardRouter = Router();
 
 deleteCardRouter.delete("/:cardId", validateToken, async (req, res) => {
   try {
+    // Extract cardId from parameters
     const { cardId } = req.params;
+    // Extract columnId from the request body
     const { columnId } = req.body;
 
     // Find the column that the new card belongs to

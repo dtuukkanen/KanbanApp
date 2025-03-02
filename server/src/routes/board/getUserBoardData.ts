@@ -24,6 +24,7 @@ getUserBoardDataRouter.get("/", validateToken, async (req, res) => {
       })
       .exec();
 
+    // Check if the user or boards were not found
     if (!userData) {
       return void res.status(404).json({ message: "User or boards not found" });
     }

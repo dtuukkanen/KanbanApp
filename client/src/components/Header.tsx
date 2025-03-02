@@ -6,6 +6,7 @@ import { Dialog, DialogPanel, PopoverGroup } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 
 export default function Example() {
+  // State to manage the visibility of the mobile menu
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
@@ -14,6 +15,7 @@ export default function Example() {
         aria-label="Global"
         className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"
       >
+        {/* Logo section */}
         <div className="flex lg:flex-1">
           <a href="#" className="-m-1.5 p-1.5">
             <span className="sr-only">Your Company</span>
@@ -24,6 +26,8 @@ export default function Example() {
             />
           </a>
         </div>
+
+        {/* Mobile menu button */}
         <div className="flex lg:hidden">
           <button
             type="button"
@@ -34,6 +38,8 @@ export default function Example() {
             <Bars3Icon aria-hidden="true" className="size-6" />
           </button>
         </div>
+
+        {/* Desktop navigation links */}
         <PopoverGroup className="hidden lg:flex lg:gap-x-12">
           <Link className="text-sm/6 font-semibold text-gray-900" to="/">
             Home
@@ -42,12 +48,16 @@ export default function Example() {
             Signout
           </Link>
         </PopoverGroup>
+
+        {/* Desktop login link */}
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
           <Link className="text-sm/6 font-semibold text-gray-900" to={"/login"}>
             Log in <span aria-hidden="true">&rarr;</span>
           </Link>
         </div>
       </nav>
+
+      {/* Mobile menu dialog */}
       <Dialog
         open={mobileMenuOpen}
         onClose={setMobileMenuOpen}

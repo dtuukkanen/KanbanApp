@@ -8,7 +8,9 @@ const createColumnRouter = Router();
 
 createColumnRouter.post("/:boardId", validateToken, async (req, res) => {
   try {
+    // Extract boardId from the parameters
     const { boardId } = req.params;
+    // Extract title from the request body
     const { title } = req.body;
 
     console.log(boardId, title);

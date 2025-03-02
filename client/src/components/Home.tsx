@@ -56,6 +56,7 @@ const Home = () => {
   return (
     <div className="bg-white px-6 py-24 sm:py-32 lg:px-8">
       <div className="mx-auto max-w-2xl text-center">
+        {/* User is not authenticated */}
         {errorMsg === "Not authenticated" ? (
           <>
             <p className="text-base font-semibold text-red-600">
@@ -70,6 +71,7 @@ const Home = () => {
             </p>
           </>
         ) : (
+          // User is authenticated
           <>
             {errorMsg && (
               <p className="text-base font-semibold text-red-600">{errorMsg}</p>

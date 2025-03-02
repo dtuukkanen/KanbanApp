@@ -8,9 +8,17 @@ import BoardRouter from "./board";
 const router = Router();
 
 // Define the routes
+
+// Routes for board-related operations
 router.use("/boards", BoardRouter);
+
+// Routes for column-related operations
 router.use("/columns", columnsRouter);
+
+// Routes for card-related operations
 router.use("/cards", cardsRouter);
+
+// Routes for authentication-related operations
 router.use("/auth", authRouter);
 
 // Export the router

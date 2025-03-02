@@ -7,6 +7,7 @@ const deleteColumnRouter = Router();
 
 deleteColumnRouter.delete("/:columnId", validateToken, async (req, res) => {
   try {
+    // Extract columnId from the parameter
     const { columnId } = req.params;
 
     const column = await ColumnModel.findById(columnId);
