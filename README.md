@@ -45,3 +45,16 @@ I also used ChatGPT when I was not actively coding to give me ideas of how I cou
 ## Technology choices
 
 I decided to build my app with React, Express and TailwindCSS. I chose React and Express just because they were familiar to me from the course and Tailwind because it is familiar to me from previous own projects.
+
+### Client side
+
+- React
+- TailwindCSS
+- dnd-kit
+
+### Server side
+
+- Express
+- Mongodb
+- JwtPayload
+- bcrypt
